@@ -1,0 +1,354 @@
+«Вы находитесь здесь»: почему…
+[
+    {
+        "id": 1,
+        "label": "100%×150_Branding_desktop",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "adfox_method": "createAdaptive",
+        "auto_reload": true,
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "ezfl"
+            }
+        }
+    },
+    {
+        "id": 2,
+        "label": "1200х400",
+        "provider": "adfox",
+        "adaptive": [
+            "phone"
+        ],
+        "auto_reload": true,
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "ezfn"
+            }
+        }
+    },
+    {
+        "id": 3,
+        "label": "240х200 _ТГБ_desktop",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "fizc"
+            }
+        }
+    },
+    {
+        "id": 4,
+        "label": "Article Branding",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "p1": "cfovx",
+                "p2": "glug"
+            }
+        }
+    },
+    {
+        "id": 5,
+        "label": "300x500_desktop",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "ezfk"
+            }
+        }
+    },
+    {
+        "id": 6,
+        "label": "1180х250_Interpool_баннер над комментариями_Desktop",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "h",
+                "ps": "bugf",
+                "p2": "ffyh"
+            }
+        }
+    },
+    {
+        "id": 7,
+        "label": "Article Footer 100%_desktop_mobile",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop",
+            "tablet",
+            "phone"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "fjxb"
+            }
+        }
+    },
+    {
+        "id": 8,
+        "label": "Fullscreen Desktop",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop",
+            "tablet"
+        ],
+        "auto_reload": true,
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "fjoh"
+            }
+        }
+    },
+    {
+        "id": 9,
+        "label": "Fullscreen Mobile",
+        "provider": "adfox",
+        "adaptive": [
+            "phone"
+        ],
+        "auto_reload": true,
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "fjog"
+            }
+        }
+    },
+    {
+        "id": 10,
+        "disable": true,
+        "label": "Native Partner Desktop",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop",
+            "tablet"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "clmf",
+                "p2": "fmyb"
+            }
+        }
+    },
+    {
+        "id": 11,
+        "disable": true,
+        "label": "Native Partner Mobile",
+        "provider": "adfox",
+        "adaptive": [
+            "phone"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "clmf",
+                "p2": "fmyc"
+            }
+        }
+    },
+    {
+        "id": 12,
+        "label": "Кнопка в шапке",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "p1": "bscsh",
+                "p2": "fdhx"
+            }
+        }
+    },
+    {
+        "id": 13,
+        "label": "DM InPage Video PartnerCode",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop",
+            "tablet",
+            "phone"
+        ],
+        "adfox_method": "createAdaptive",
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "h",
+                "ps": "bugf",
+                "p2": "flvn"
+            }
+        }
+    },
+    {
+        "id": 14,
+        "label": "Yandex context video banner",
+        "provider": "yandex",
+        "yandex": {
+            "block_id": "VI-223676-0",
+            "render_to": "inpage_VI-223676-0-1104503429",
+            "adfox_url": "//ads.adfox.ru/228129/getCode?pp=h&ps=bugf&p2=fpjw&puid1=&puid2=&puid3=&puid4=&puid8=&puid9=&puid10=&puid21=&puid22=&puid31=&puid32=&puid33=&fmt=1&dl={REFERER}&pr="
+        }
+    },
+    {
+        "id": 15,
+        "label": "Баннер в ленте на главной",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop",
+            "tablet",
+            "phone"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "p1": "byudx",
+                "p2": "ftjf"
+            }
+        }
+    },
+    {
+        "id": 16,
+        "label": "Кнопка в шапке мобайл",
+        "provider": "adfox",
+        "adaptive": [
+            "tablet",
+            "phone"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "p1": "byzqf",
+                "p2": "ftwx"
+            }
+        }
+    },
+    {
+        "id": 17,
+        "label": "Stratum Desktop",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "auto_reload": true,
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "fzvb"
+            }
+        }
+    },
+    {
+        "id": 18,
+        "label": "Stratum Mobile",
+        "provider": "adfox",
+        "adaptive": [
+            "tablet",
+            "phone"
+        ],
+        "auto_reload": true,
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "fzvc"
+            }
+        }
+    },
+    {
+        "id": 19,
+        "disable": true,
+        "label": "Тизер на главной",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop",
+            "tablet",
+            "phone"
+        ],
+        "auto_reload": true,
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "p1": "cbltd",
+                "p2": "gazs"
+            }
+        }
+    },
+    {
+        "id": 20,
+        "label": "Кнопка в сайдбаре",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "p1": "cgxmr",
+                "p2": "gnwc"
+            }
+        }
+    },
+    {
+        "id": 21,
+        "label": "Ультратизер",
+        "provider": "adfox",
+        "adaptive": [
+            "desktop",
+            "tablet",
+            "phone"
+        ],
+        "adfox": {
+            "ownerId": 228129,
+            "params": {
+                "pp": "g",
+                "ps": "bugf",
+                "p2": "gtjk"
+            }
+        }
+    }
+]
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0SWQiOiI1ZTRmZjUxODYyOGE2YzcxNDUxNWY0ZGEiLCJpYXQiOjE1ODI1MzY0NDB9.AwBBnUWMy3RR1xtAoaXVr81WvqxdlD4C8CBpwFiONzw","release":"8d39e4ac"}
