@@ -6,23 +6,29 @@ import langdetect
 import slugify
 
 
-def text_to_speech(text, name):
+
+async def text_to_speech(text, name) -> bool:
     lang = langdetect.detect(text)
     with open(f'media/{name}.txt', 'w') as f:
         f.write(text)
-    voice = 'Yuri' if lang == 'ru' else 'Alex'
+    voice = 'Yuri -r 230' if lang == 'ru' else 'Alex'
     cmd = f'say -v {voice} -o media/{name}.aiff -f media/{name}.txt'
-    os.system(cmd)
-
-
-def convert_audio_format(name):
     try:
-        ffmpeg.input(f'media/{name}.aiff').output(f'media/{name}.mp3', audio_bitrate=64).run()
+        os.system(cmd)
         return True
-    except ffmpeg.Error:
-        return False
+    except os.error as err:
+        return err
 
-def url_to_name(url):
+
+async def convert_audio_format(name) -> bool:
+    try:
+        ffmpeg.input(f'media/{name}.aiff').output(f'media/{name}.mp3', audio_bitrate=32000).run()
+        return True
+    except ffmpeg.Error as err:
+        return err
+
+
+async def url_to_name(url):
     slugname = slugify.slugify(url)
     words = slugname.split('-')
     clean_words = []
