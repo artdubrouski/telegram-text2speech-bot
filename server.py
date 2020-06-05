@@ -1,9 +1,11 @@
 import logging
 import os
 import time
+from typing import List
 
 import aiohttp
 import aiogram
+import asyncio
 import environ
 import slugify
 
@@ -36,15 +38,29 @@ async def send_welcome(message: types.Message):
     await message.answer("Send me url or text, I'll send audio back")
 
 
-queue = dict()
+queue = asyncio.PriorityQueue()
 
 
-@dp.message_handler()
+async def answering_machine():
+    await asyncio.sleep(0.5)
+    while not queue.empty():
+        _, msg, fname = await queue.get()
+        await msg.answer_audio(open(fname, 'rb'))
+        queue.task_done()
+        try:
+            os.remove(fname)
+        except os.error:
+            pass
+
+@dp.message_handler(content_types=["text", "photo"])
 async def extract(msg: types.Message):
-    if not isinstance(msg, types.Message):
-        await msg.answer("This input type isn't supported")
-        return
+    msg_time = time.time()
     msg_text = msg.text
+    if not isinstance(msg_text, str):
+        msg_text = msg.caption
+        if not isinstance(msg_text, str):
+            await msg.answer("Text/URL not found")
+            return
     if await is_url(msg_text):
         clean = await url_extractor(msg_text)
         name = await url_to_name(msg.text)
@@ -61,14 +77,13 @@ async def extract(msg: types.Message):
         return
     try:
         os.remove(f'media/{name}.aiff')
+        os.remove(f'media/{name}.txt')
     except os.error:
         pass
     fname = f'media/{name}.mp3'
-    await msg.answer_audio(open(fname, 'rb'))
-    try:
-        os.remove(fname)
-    except os.error:
-        pass
+    await queue.put((msg_time, msg, fname))
+    if queue.qsize() == 1:
+        await answering_machine()
 
 
 if __name__ == '__main__':
