@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 
 import aiohttp
 import aiogram
@@ -33,6 +34,9 @@ dp.middleware.setup(AccessMiddleware(ACCESS_ID))
 @dp.message_handler(commands=['start', 'help'])
 async def send_welcome(message: types.Message):
     await message.answer("Send me url or text, I'll send audio back")
+
+
+queue = dict()
 
 
 @dp.message_handler()
