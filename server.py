@@ -52,7 +52,7 @@ async def answering_machine():
         except os.error:
             pass
 
-@dp.message_handler(content_types=["text", "photo"])
+@dp.message_handler(content_types=["text", "photo", "video", "audio", "animation"])
 async def extract(msg: types.Message):
     msg_time = time.time()
     msg_text = msg.text
