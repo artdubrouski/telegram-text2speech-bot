@@ -1,7 +1,6 @@
 import logging
 import os
 import time
-from typing import List
 
 import aiohttp
 import aiogram
@@ -10,12 +9,10 @@ import environ
 import slugify
 
 from aiogram import Bot, Dispatcher, executor, types
-from converters import (
-    text_to_speech,
-    convert_audio_format,
-    url_to_name)
+from converters import convert_audio_format, text_to_speech, url_to_name
 from exrtactors import url_extractor, humanize_urls_in_text, is_url
 from middlewares import AccessMiddleware
+
 
 env = environ.Env()
 env.read_env(".env")

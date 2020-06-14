@@ -6,7 +6,6 @@ import langdetect
 import slugify
 
 
-
 async def text_to_speech(text, name) -> bool:
     lang = langdetect.detect(text)
     with open(f'media/{name}.txt', 'w') as f:
