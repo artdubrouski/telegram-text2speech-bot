@@ -12,6 +12,8 @@ future==0.18.2
 idna==2.9
 langdetect==1.0.8
 multidict==4.7.6
+pydub==0.24.0
+pytest==6.0.1
 python-slugify==4.0.0
 pytz==2020.1
 six==1.15.0

@@ -2,86 +2,96 @@ import logging
 import os
 import time
 
-import aiohttp
 import aiogram
 import asyncio
-import environ
-import slugify
+import settings
 
-from aiogram import Bot, Dispatcher, executor, types
-from converters import convert_audio_format, text_to_speech, url_to_name
-from exrtactors import url_extractor, humanize_urls_in_text, is_url
+from converters import convert_audio_format, text_to_speech
+from helpers import (
+    clean_files,
+    clean_text_is_valid,
+    get_clean_text_with_fname,
+    get_validated_msg_text,
+)
 from middlewares import AccessMiddleware
 
 
-env = environ.Env()
-env.read_env(".env")
+bot = aiogram.Bot(token=settings.API_TOKEN)
+dp = aiogram.Dispatcher(bot)
+dp.middleware.setup(AccessMiddleware(settings.ACCESS_ID))
 
-logging.basicConfig(level=logging.INFO)
-
-API_TOKEN = env.str('TG_API_TOKEN')
-ACCESS_ID = env.str('TG_ACCESS_ID')
-# PROXY_URL = env.str('TG_PROXY')
-
-
-# bot = Bot(token=API_TOKEN, proxy=PROXY_URL)
-bot = Bot(token=API_TOKEN)
-dp = Dispatcher(bot)
-dp.middleware.setup(AccessMiddleware(ACCESS_ID))
+logger = logging.getLogger('article_bot')
+file_handler = logging.FileHandler('logs.log')
+formatter = logging.Formatter('%(asctime)s %(message)s', '%Y-%m-%d %H:%M:%S')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 
 @dp.message_handler(commands=['start', 'help'])
-async def send_welcome(message: types.Message):
-    await message.answer("Send me url or text, I'll send audio back")
+async def send_welcome(message: aiogram.types.Message):
+    '''Welcome msg from bot on first use.'''
+    await message.answer('Send me URL or text, get audio back')
 
 
 queue = asyncio.PriorityQueue()
 
 
 async def answering_machine():
+    '''
+    Internal msg handler, gets messages from the queue and sends them out.
+    '''
     await asyncio.sleep(0.5)
+
     while not queue.empty():
         _, msg, fname = await queue.get()
+
         await msg.answer_audio(open(fname, 'rb'))
+        logger.info(f'{fname} OK')
         queue.task_done()
+
         try:
             os.remove(fname)
-        except os.error:
-            pass
+        except os.error as err:
+            logger.warning(err)
 
-@dp.message_handler(content_types=["text", "photo", "video", "audio", "animation"])
-async def extract(msg: types.Message):
+
+@dp.message_handler(content_types=['text', 'photo', 'video', 'audio', 'animation'])
+async def handle_user_msg(msg: aiogram.types.Message):
+    '''
+    Entry point for all the messages from user.
+    Handles extraction and conversion flow.
+    '''
     msg_time = time.time()
-    msg_text = msg.text
-    if not isinstance(msg_text, str):
-        msg_text = msg.caption
-        if not isinstance(msg_text, str):
-            await msg.answer("Text/URL not found")
-            return
-    if await is_url(msg_text):
-        clean = await url_extractor(msg_text)
-        name = await url_to_name(msg.text)
-    else:
-        clean = await humanize_urls_in_text(msg_text)
-        name = slugify.slugify(msg_text[:16])
+
+    msg_text = await get_validated_msg_text(msg)
+    if msg_text is None:
+        return
+    
+    clean, name = await get_clean_text_with_fname(msg, msg_text)
+
+    if not await clean_text_is_valid(msg, clean, name):
+        return
+
     text_converted = await text_to_speech(clean, name)
-    if text_converted is not True:
-        await msg.answer(text_converted)
+
+    if text_converted is not True:  # if error returned
+        await msg.answer(str(text_converted))
         return
+
     audio_converted = await convert_audio_format(name)
-    if audio_converted is not True:
-        await msg.answer(audio_converted)
+
+    if audio_converted is not True:  # if error returned
+        await msg.answer(str(audio_converted))
         return
-    try:
-        os.remove(f'media/{name}.aiff')
-        os.remove(f'media/{name}.txt')
-    except os.error:
-        pass
+
+    await clean_files(name)
+
     fname = f'media/{name}.mp3'
     await queue.put((msg_time, msg, fname))
-    if queue.qsize() == 1:
+
+    if queue.qsize() == 1:  # keep messages in order
         await answering_machine()
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    aiogram.executor.start_polling(dp, skip_updates=True)

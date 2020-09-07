@@ -158,9 +158,6 @@ typings/
 !.vscode/extensions.json
 
 
-
-
-
 ### Windows template
 # Windows thumbnail cache files
 Thumbs.db
@@ -289,4 +286,5 @@ media/*
 .envs/*
 !.envs/.local/
 
-gunicorn_config.py
+Dockerfile
+.dockerignore
