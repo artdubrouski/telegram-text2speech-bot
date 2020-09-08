@@ -9,6 +9,19 @@ import slugify
 from typing import Union
 
 
+BLACKLISTED_WORDS = {
+    'app',
+    'by',
+    'com',
+    'en',
+    'http',
+    'https',
+    'org',
+    'ru',
+    'www',
+}
+
+
 async def text_to_speech(text: str, name: str) -> Union[bool, str]:
     '''
     Converts text to aiff with Siri.
@@ -40,16 +53,16 @@ async def convert_audio_format(name) -> Union[bool, str]:
 
 async def url_to_name(url: str) -> str:
     '''
-    Humanizes urls to short domain-only name.
-    Returns time-based number as the last resort.
+    Slugifies urls. Returns time-based number as the last resort.
+    Names used for audio files naming.
     '''
     slugname = slugify.slugify(url)
     words = slugname.split('-')
     clean_words = []
 
-    for w in words:
-        if w.isalpha() and w not in settings.BLACKLISTED_WORDS:
-            clean_words.append(w)
+    for word in words:
+        if word.isalpha() and word not in BLACKLISTED_WORDS:
+            clean_words.append(word)
 
     if clean_words:
         if len(clean_words) > 5:

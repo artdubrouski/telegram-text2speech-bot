@@ -10,6 +10,8 @@ Not Dockerized.
 All the URLs in text and parsed articles are humanized before text-to-speech conversion:
 * *`https://en.wikipedia.org/wiki/Telegram`* will be humanized to *`en.wikipedia.org`*.
 
+In the end of every file EOF_STRING added to logically split the audio files in Telegram playlist.
+EOF_STRING can be modified in settings.py
 
 
 # Prerequisites
