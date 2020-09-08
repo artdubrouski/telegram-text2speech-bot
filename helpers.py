@@ -1,12 +1,15 @@
 import logging
 import os
+import time
 
-from typing import Optional, Tuple
+import asyncio
 
-import aiogram
+from typing import Optional, Tuple, Union
+
 import slugify
 import settings
 
+from aiogram.types.message import Message
 from converters import url_to_name
 from exrtactors import extract_text_from_url, humanize_urls_in_text, is_url
 
@@ -14,16 +17,17 @@ from exrtactors import extract_text_from_url, humanize_urls_in_text, is_url
 logger = logging.getLogger('article_bot')
 
 
-async def get_validated_msg_text(msg: aiogram.types.Message) -> Optional[str]:
+async def get_validated_msg_text(msg: Message) -> Optional[str]:
     '''
     Returns text/url from the given msg, or None if not found.
     '''
+    msg_text = msg.text
     if not isinstance(msg.text, str):
         msg_text = msg.caption
         if not isinstance(msg_text, str):
             await msg.answer('Text/URL not found')
-            return
-    return msg.text
+            return None
+    return msg_text
 
 
 async def clean_files(name: str) -> None:
@@ -37,7 +41,7 @@ async def clean_files(name: str) -> None:
         logger.warning(err)
 
 
-async def get_clean_text_with_fname(msg: aiogram.types.Message, msg_text: str) -> Tuple[str, str]:
+async def get_clean_text_with_fname(msg: Message, msg_text: str) -> Tuple[str, str]:
     '''
     Extracts humanized text based on input type with filename for later use.
     '''
@@ -50,10 +54,24 @@ async def get_clean_text_with_fname(msg: aiogram.types.Message, msg_text: str) -
     return clean, name
 
 
-async def clean_text_is_valid(msg: aiogram.types.Message, clean:str, name: str) -> bool:
+async def clean_text_is_valid(msg: Message, clean:str, name: str) -> bool:
     '''Checks if both message text and filename are not empty.'''
     if not name or not clean or clean == settings.EOF_STRING:
         await msg.answer('No text found')
         logger.info(f'No text found @ {msg.text}')
+        return False
+    return True
+
+
+async def queue_task(msg: Message, name: str, queue: asyncio.PriorityQueue):
+    '''Puts a task in the priority queue based on current time.'''
+    msg_time = time.time()
+    fname = f'media/{name}.mp3'
+    await queue.put((msg_time, msg, fname))
+
+
+async def is_valid_conversion_result(msg: Message, result: Union[str, bool]) -> bool:
+    if isinstance(result, str):  # if result is success it's True else error str
+        await msg.answer(result)
         return False
     return True

@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 API_TOKEN = env.str('TG_API_TOKEN')
-ACCESS_ID = env.str('TG_ACCESS_ID')
+ACCESS_ID = env.int('TG_ACCESS_ID', 0)  # bot can be used by anyone if not set
 
 EOF_STRING = '\n\nEND\n\nOF\n\nFILE \n\n'
 

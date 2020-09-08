@@ -1,4 +1,4 @@
-aiogram==2.8
+aiogram==2.9.2
 aiohttp==3.6.2
 async-timeout==3.0.1
 attrs==19.3.0
@@ -13,7 +13,6 @@ idna==2.9
 langdetect==1.0.8
 multidict==4.7.6
 pydub==0.24.0
-pytest==6.0.1
 python-slugify==4.0.0
 pytz==2020.1
 six==1.15.0

@@ -281,6 +281,7 @@ media/*
 
 .pytest_cache/
 
+.vscode
 
 .env
 .envs/*
@@ -288,3 +289,5 @@ media/*
 
 Dockerfile
 .dockerignore
+
+*.session
