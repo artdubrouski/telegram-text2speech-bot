@@ -8,7 +8,7 @@ import settings
 from converters import convert_audio_format, text_to_speech
 from helpers import (
     clean_files,
-    clean_text_is_valid,
+    is_valid_clean_text,
     is_valid_conversion_result,
     get_clean_text_with_fname,
     get_validated_msg_text,
@@ -67,7 +67,7 @@ async def handle_user_msg(msg: aiogram.types.message.Message) -> None:
     
     clean, name = await get_clean_text_with_fname(msg, msg_text)
 
-    if not await clean_text_is_valid(msg, clean, name):
+    if not await is_valid_clean_text(msg, clean, name):
         return
 
     text_converted = await text_to_speech(clean, name)

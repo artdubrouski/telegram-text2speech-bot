@@ -54,7 +54,7 @@ async def get_clean_text_with_fname(msg: Message, msg_text: str) -> Tuple[str, s
     return clean, name
 
 
-async def clean_text_is_valid(msg: Message, clean:str, name: str) -> bool:
+async def is_valid_clean_text(msg: Message, clean:str, name: str) -> bool:
     '''Checks if both message text and filename are not empty.'''
     if not name or not clean or clean == settings.EOF_STRING:
         await msg.answer('No text found')
@@ -71,7 +71,11 @@ async def queue_task(msg: Message, name: str, queue: asyncio.PriorityQueue):
 
 
 async def is_valid_conversion_result(msg: Message, result: Union[str, bool]) -> bool:
-    if isinstance(result, str):  # if result is success it's True else error str
+    '''
+    If conversion result is success it's True else it's error str.
+    On success returns True, otherwise sends user conversion error message.
+    '''
+    if isinstance(result, str):
         await msg.answer(result)
         return False
     return True
